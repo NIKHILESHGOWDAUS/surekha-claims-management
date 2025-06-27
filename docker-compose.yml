@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: employee_claims_db
+    ports:
+      - "5834:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build: ./Backend
+    container_name: backend
+    depends_on:
+      - postgres
+    ports:
+      - "3608:3608"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  employee-side-claim:
+    build: ./employee-side-claim
+    container_name: employee-side-claim
+    ports:
+      - "8913:80"
+    restart: unless-stopped
+
+  hr-claim:
+    build: ./hr-claim
+    container_name: hr-claim
+    ports:
+      - "8914:80"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
