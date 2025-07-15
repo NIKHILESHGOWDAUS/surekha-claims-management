@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: admin123
       POSTGRES_DB: employee_claims_db
     ports:
-      - "5604:5432"
+      - "5427:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -20,7 +20,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "3604:3604"
+      - "3427:3427"
     environment:
       - NODE_ENV=production
     restart: unless-stopped
@@ -29,14 +29,14 @@ services:
     build: ./employee-side-claim
     container_name: employee-side-claim
     ports:
-      - "8608:80"
+      - "8428:80"
     restart: unless-stopped
 
   hr-claim:
     build: ./hr-claim
     container_name: hr-claim
     ports:
-      - "8609:80"
+      - "8429:80"
     restart: unless-stopped
 
 volumes:

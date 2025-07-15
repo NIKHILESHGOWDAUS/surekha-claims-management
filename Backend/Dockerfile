@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # Expose the backend port
-EXPOSE 3604
+EXPOSE 3427
 
 # Start the server
 CMD ["node", "server.js"]
